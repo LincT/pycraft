@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# And shebangs, shebangs! Didn't a musician named Ricky sing something like that?
 
 # standard libraries included in python
 import datetime
@@ -15,7 +14,7 @@ from FileIO import FileIO
 from LogIO import LogHandler
 
 # Logging setup
-logger = LogHandler(file_name="WordPressBackup_log.txt", logging_level="warning")
+logger = LogHandler(file_name="py_backup_util_log.txt", logging_level="warning")
 
 
 def parse_sub_process(command: str,) -> [str]:  # get command, return list of strings
@@ -164,7 +163,7 @@ def main():
     if len(args_list) > 1:
         # no args is still going to have an array of 1,
         # as sys args includes the calling file as arg0
-        logger.write('Argument List:{}\nArg Count: {}'.format(str(args_list), len(args_list)))
+        logger.write(f'Argument List:{str(args_list)}\nArg Count: {len(args_list)}')
         # DONE: relative file search
 
         # directory should always be last element, regardless of list length
@@ -174,7 +173,7 @@ def main():
         for each in args_list:
             if str(each[0]).startswith("-"):
                 if each in options_dict.keys():
-                    # should only treat seperate args as flags if both conditions true
+                    # should only treat separate args as flags if both conditions true
                     # spoofing linux cli common practice
                     if callable(options_dict.get(each, None)):
                         options_dict[each]()
@@ -264,27 +263,11 @@ def main():
                 logger.write("failure: {} not found in:\n".format(item, str(archive_results)))
                 raise IntegrityValidationException
 
-        # business logic for sql archiving such as the where and name
-        if options_dict["-sql"]:
-            logger.write("options_dict[-sql]:{}\n".format(options_dict["-sql"]))
-            if options_dict["-user"] is None:
-                options_dict["-user"] = "root"
-            if sql_archive(backup_dir=backup_directory,
-                           file_name=time_string("%m.%d.%Y"),
-                           user_name=options_dict["-user"]):
-                display = "SQL backup extraction complete, file can be found in:\n{}".format(backup_directory)
-                print(display)
-                logger.write(display)
-            else:
-                print("no SQL backup created. If you feel you've reached this message in error, "
-                      "please consult your software dealer.")
-                logger.write("SQL dump NOT created.")
-
         if options_dict["-debug"]:
             print("Archive created:\n\t {}".format(time_string()), archive)
             # break out of script if errors, so user can call script again or troubleshoot
             exit_check("Is everything there?")
-        print("File archive completed. Log available at: {}".format("./WordPressBackup_log.txt"))
+        print(f"File archive completed. Log available at: {''}")
 
     else:
         print("no file path specified, or path not found, aborting.\n"
