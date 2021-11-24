@@ -9,9 +9,9 @@ import sys
 import tarfile
 
 # local file imports
-from Custom_Project_Errors import *
-from FileIO import FileIO
-from LogIO import LogHandler
+from core.Custom_Project_Errors import *
+from core.FileIO import FileIO
+from core.LogIO import LogHandler
 
 # Logging setup
 logger = LogHandler(file_name="py_backup_util_log.txt", logging_level="warning")
