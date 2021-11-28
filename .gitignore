@@ -1,5 +1,6 @@
 # omit IDE from git
 .idea/*
+__pycache__
 
 # omit compiled/generated files
 logs/*
