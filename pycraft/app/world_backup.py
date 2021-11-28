@@ -9,9 +9,9 @@ import sys
 import tarfile
 
 # local file imports
-from core.Custom_Project_Errors import *
-from core.FileIO import FileIO
-from core.LogIO import LogHandler
+from pycraft.core.Custom_Project_Errors import *
+from pycraft.core.FileIO import FileIO
+from pycraft.core.LogIO import LogHandler
 
 # Logging setup
 logger = LogHandler(file_name="py_backup_util_log.txt", logging_level="warning")

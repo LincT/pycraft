@@ -3,3 +3,5 @@
 
 # omit compiled/generated files
 logs/*
+
+/venv/
