@@ -3,3 +3,4 @@ https://www.digitalocean.com/community/tutorials/how-to-set-up-an-apache-mysql-a
 
 https://api.mcsrvstat.us/icon/
 https://api.mcsrvstat.us/
+ping

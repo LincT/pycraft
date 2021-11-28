@@ -8,6 +8,8 @@ logs/*
 # omit tinkering and practical tests
 scratchpad
 documentation/
+/documentation/*
 # omit virtual envrionment
 /venv/
 
+/documentation/
