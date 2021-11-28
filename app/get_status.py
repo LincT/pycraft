@@ -18,7 +18,7 @@ def get_public_ip(v: int = 4) -> dict:
         ip = requests.request("get", f"{url[v]}")
 
         # return {"type": v, "address": ip.text.strip()}
-        if len(str(ip_address(ip.text.strip()))) > 0:
+        if ip_address(ip.text.strip()):
             return {"type": v, "address": ip.text.strip()}
         else:
             return {"type": 0, "address": "0.0.0.0"}

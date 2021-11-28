@@ -3,3 +3,6 @@
 
 # omit compiled/generated files
 logs/*
+
+# omit tinkering and practical tests
+scratchpad

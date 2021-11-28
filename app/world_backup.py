@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+
+
 # standard libraries included in python
 import datetime
 import os
@@ -9,12 +11,29 @@ import sys
 import tarfile
 
 # local file imports
-from core.Custom_Project_Errors import *
-from core.FileIO import FileIO
 from core.LogIO import LogHandler
+
+
+# apparently this is bad practice
+# sys.path.append(ROOT)
+# export PYTHONPATH="${PYTHONPATH}:/path/to/your/project/"
+
+# special libraries (pip install requirements.txt)
+# none as of 28/NOV/2021
 
 # Logging setup
 logger = LogHandler(file_name="py_backup_util_log.txt", logging_level="warning")
+
+
+# variables from system/runtime
+ROOT = str(os.path.dirname(os.path.abspath(__file__)))
+
+
+def docker_exec(
+        command: str,
+        container: str = "mc-server"
+) -> [str]:
+    parse_sub_process(f"docker exec {container} {command}")
 
 
 def parse_sub_process(command: str,) -> [str]:  # get command, return list of strings
@@ -42,19 +61,15 @@ def exit_check(prompt: str):
         exit(0)  # exit code 0 to define user initiated shutdown.
 
 
-def time_string(format_string: str = "%A%d%B", timezone: str = "Local") -> str:
+def time_string(format_string: str = "%Y-%b-%d-%H%M%S", timezone: str = "Local") -> str:
     """
-    :param format_string: (defaults to Thursday30July)
+    :param format_string: (defaults to 2021-Nov-21-024514)
     :param timezone: local or UTC, full timezone support not implemented yet.
     :return: string
     """
     # tar file name creation
-    # currently in UTC for consistency since we could work on servers in any time zone
-    # # eg: ./backups/Sunday01January_backup
-    # DONE sort filename generation for date format w/ user
-    # DONE set to Central Time as per user request
-    # # maybe convert to ?: %e%b%Y_%H%M eg: 01Jan2020_0001
-    # varDate=$(date +%A%d%B)
+    # currently in local
+
     if timezone.upper() == "UTC":  # force input as uppercase to help prevent human error
         formatted_time = datetime.datetime.now(datetime.timezone.utc).strftime(format_string)
 
@@ -128,22 +143,16 @@ def help_info():
 
 
 def version():
-    print("Version 1.0")
+    release_version = 1.0
+    release_date = "01-DEC-2021"
+    print(f"Version: {release_version}\t Released: {release_date}")
     exit(0)
-
-
-def __doc__():
-    # experimental attempt to allow man to work w/ this file
-    # Skipped: add man page
-    return help_info()
-
 
 def main():
     # business logic here:
     # possibly a way to execute this all from cli w/out needing to edit the script
     # need to import sys to work
-    # https://www.tutorialspoint.com/python/python_command_line_arguments.htm
-    # debating on whether to implement argparse, might have more built in, but requires further install
+    # debating on whether to implement argparse, might have more built in, but might complicate deployment
     
     options_dict: dict = {
         "-in": None,
@@ -153,13 +162,10 @@ def main():
         "-debug": False,
         "-overwrite": False,
     }
-
+    
+    # caching any args, preventing break on no args
     args_list = [each for each in sys.argv]
-    # for each in sys.argv:
-    #     # caching any args, preventing break on no args
-    #     args_list.append(each)
 
-    # DONE: make file path usable from cli instead of within file edits
     if len(args_list) > 1:
         # no args is still going to have an array of 1,
         # as sys args includes the calling file as arg0
