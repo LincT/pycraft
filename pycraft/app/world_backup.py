@@ -11,7 +11,9 @@ import sys
 import tarfile
 
 # local file imports
-from core.LogIO import LogHandler
+from pycraft.core.Custom_Project_Errors import *
+from pycraft.core.FileIO import FileIO
+from pycraft.core.LogIO import LogHandler
 
 
 # apparently this is bad practice
@@ -162,7 +164,7 @@ def main():
         "-debug": False,
         "-overwrite": False,
     }
-    
+
     # caching any args, preventing break on no args
     args_list = [each for each in sys.argv]
 
