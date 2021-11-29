@@ -26,6 +26,7 @@ from core.FileIO import FileIO
 # variables initialized at start and remain constant through out runtime
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LOGGING_DIR = f"{ROOT}{os.path.sep}logs"
+FileIO.verify_dir(LOGGING_DIR)
 
 # Logging setup
 logger = LogHandler(file_name=f"{LOGGING_DIR}{os.path.sep}py_backup_util_log.txt", logging_level="warning")

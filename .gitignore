@@ -4,11 +4,11 @@ __pycache__
 
 # omit compiled/generated files
 logs/*
+app/config.txt
 
 # omit tinkering and practical tests
 scratchpad
 documentation
-
 
 # omit virtual envrionment
 /venv/
