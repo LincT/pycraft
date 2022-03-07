@@ -7,7 +7,7 @@ class MyTestCase(unittest.TestCase):
     def test_something(self):
         # self.assertEqual(True, False)
         # print(f"root = {wb.script_root()}")
-        # print("nothing configured to test")
+        # print("nothing configured to test.py")
         print(f"root = {wb.ROOT}")
 
 
