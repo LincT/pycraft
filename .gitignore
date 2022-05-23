@@ -11,7 +11,7 @@ scratchpad
 /venv/
 
 #omit sensitive config files
-*config.txt
+app/config.txt
 *config.json
 
 # omit random notes

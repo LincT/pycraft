@@ -1,6 +1,5 @@
 import unittest
-from pycraft.app import world_backup as wb
-
+from app import world_backup as wb
 
 
 class MyTestCase(unittest.TestCase):

@@ -8,9 +8,8 @@ import sys
 import tarfile
 
 # local file imports
-from pycraft.core.Custom_Project_Errors import *
-from pycraft.core.FileIO import FileIO
-from pycraft.core.LogIO import LogHandler
+from app.core.FileIO import FileIO
+from app.core.LogIO import LogHandler
 
 # special libraries (pip install requirements.txt)
 # none as of 28/NOV/2021 needed for this file

@@ -7,13 +7,10 @@ import sys
 import tarfile
 import shutil
 import math
-import argparse  # TODO
-from collections import namedtuple
 
 # local file imports
-from core.LogIO import LogHandler
-from core.Custom_Errors import *
-from core.FileIO import FileIO
+from app.core import LogHandler
+from app.core import FileIO
 
 # directories defined at execution
 root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
