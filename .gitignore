@@ -16,3 +16,6 @@ app/config.txt
 
 # omit random notes
 documentation
+
+# seperate helper files from main
+app/core/*
