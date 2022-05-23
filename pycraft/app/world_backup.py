@@ -1,7 +1,4 @@
 #!/usr/bin/env python3
-
-
-
 # standard libraries included in python
 import datetime
 import os
@@ -15,20 +12,33 @@ from pycraft.core.Custom_Project_Errors import *
 from pycraft.core.FileIO import FileIO
 from pycraft.core.LogIO import LogHandler
 
-
-# apparently this is bad practice
-# sys.path.append(ROOT)
-# export PYTHONPATH="${PYTHONPATH}:/path/to/your/project/"
-
 # special libraries (pip install requirements.txt)
-# none as of 28/NOV/2021
+# none as of 28/NOV/2021 needed for this file
+
+# variables initialized at start and remain constant through out runtime
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+LOGGING_DIR = f"{ROOT}{os.path.sep}logs"
 
 # Logging setup
-logger = LogHandler(file_name="py_backup_util_log.txt", logging_level="warning")
+
+# verify our logging directory exists, otherwise the script tends to break.
+if FileIO.verify_dir(LOGGING_DIR) != 1:
+    try:
+        FileIO.mkdir(LOGGING_DIR)
+        
+    except Exception as e:
+        print(f"failure to create logging directory at: \n\t{LOGGING_DIR}\nexiting")
+        print(f"{e}")
+        exit(-1)
+
+# initialize logger
+logger = LogHandler(file_name=f"{LOGGING_DIR}{os.path.sep}py_backup_util_log.txt", logging_level="warning")
 
 
-# variables from system/runtime
-ROOT = str(os.path.dirname(os.path.abspath(__file__)))
+def testing():
+    print("success")
+    print(f"ROOT = {ROOT}\nlog_dir = {LOGGING_DIR}")
+    exit(0)
 
 
 def docker_exec(
@@ -52,9 +62,7 @@ def parse_sub_process(command: str,) -> [str]:  # get command, return list of st
 
 def exit_check(prompt: str):
     response = input("{}\n".format(prompt))
-    user = "undefined_user"
-    if "USERNAME" in os.environ.keys():
-        user = os.environ.get("USERNAME")
+    user = os.environ.get("USERNAME")if "USERNAME" in os.environ.keys() else "undefined_user"
 
     if "y" not in response:
         logger.write("{}\n\tOperation aborted by user:\n{}".format(logger.timestamp(), user))
@@ -101,7 +109,7 @@ def help_info():
     -or-
     sudo python3 world_backup.py
     -or-
-    after doing sudo chmod u+x main.py, running sudo ./world_backup.py
+    after doing sudo chmod u+x ./world_backup.py, running sudo ./world_backup.py
 
     USAGE: Any of the following examples should work.
     <dir_to_archive>
@@ -144,7 +152,7 @@ def help_info():
     exit(0)
 
 
-def version():
+def version() -> str:
     release_version = 1.0
     release_date = "01-DEC-2021"
     print(f"Version: {release_version}\t Released: {release_date}")
@@ -163,6 +171,7 @@ def main():
         "-version": version,
         "-debug": False,
         "-overwrite": False,
+        "-test.py": testing,
     }
 
     # caching any args, preventing break on no args
@@ -207,6 +216,8 @@ def main():
                             options_dict["-help"]()
                         elif char == 'o':
                             options_dict["-overwrite"] = True
+                        elif char == 't':
+                            options_dict["-test.py"]()
                         else:
                             print("Flag not found:{}".format(each))
 
@@ -218,8 +229,8 @@ def main():
         if "windows" in platform.platform().lower():
             backup_directory = "./backups"
         else:
-            backup_directory = os.path.join(os.path.sep, "")
-        # list files in website directory.
+            backup_directory = os.path.join(os.path.sep, os.path.dirname(ROOT))
+        # list files in directory.
         directory_data = "\n".join(each for each in FileIO.long_list_files(options_dict["-in"]))
         output = "Files in {}:\n{}".format(options_dict["-in"], directory_data)
         logger.write(output)
