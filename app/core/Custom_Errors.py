@@ -1,2 +1,0 @@
-class IntegrityValidationException(Exception):
-    pass
