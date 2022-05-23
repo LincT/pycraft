@@ -9,3 +9,10 @@ scratchpad
 
 # omit virtual envrionment
 /venv/
+
+#omit sensitive config files
+*config.txt
+*config.json
+
+# omit random notes
+documentation
