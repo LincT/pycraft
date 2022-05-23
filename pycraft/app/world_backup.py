@@ -11,9 +11,9 @@ import sys
 import tarfile
 
 # local file imports
-from core.LogIO import LogHandler
-from core.Custom_Project_Errors import *
-from core.FileIO import FileIO
+from pycraft.core.Custom_Project_Errors import *
+from pycraft.core.FileIO import FileIO
+from pycraft.core.LogIO import LogHandler
 
 
 # apparently this is bad practice
@@ -23,18 +23,12 @@ from core.FileIO import FileIO
 # special libraries (pip install requirements.txt)
 # none as of 28/NOV/2021
 
-# variables initialized at start and remain constant through out runtime
-ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-LOGGING_DIR = f"{ROOT}{os.path.sep}logs"
-
 # Logging setup
-logger = LogHandler(file_name=f"{LOGGING_DIR}{os.path.sep}py_backup_util_log.txt", logging_level="warning")
+logger = LogHandler(file_name="py_backup_util_log.txt", logging_level="warning")
 
 
-def testing():
-    print("success")
-    print(f"ROOT = {ROOT}\nlog_dir = {LOGGING_DIR}")
-    exit(0)
+# variables from system/runtime
+ROOT = str(os.path.dirname(os.path.abspath(__file__)))
 
 
 def docker_exec(
@@ -150,12 +144,11 @@ def help_info():
     exit(0)
 
 
-def version() -> str:
+def version():
     release_version = 1.0
     release_date = "01-DEC-2021"
     print(f"Version: {release_version}\t Released: {release_date}")
     exit(0)
-
 
 def main():
     # business logic here:
@@ -170,9 +163,8 @@ def main():
         "-version": version,
         "-debug": False,
         "-overwrite": False,
-        "-test": testing,
     }
-    
+
     # caching any args, preventing break on no args
     args_list = [each for each in sys.argv]
 
@@ -215,8 +207,6 @@ def main():
                             options_dict["-help"]()
                         elif char == 'o':
                             options_dict["-overwrite"] = True
-                        elif char == 't':
-                            options_dict["-test"]()
                         else:
                             print("Flag not found:{}".format(each))
 

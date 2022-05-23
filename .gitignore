@@ -6,3 +6,6 @@ logs/*
 
 # omit tinkering and practical tests
 scratchpad
+
+# omit virtual envrionment
+/venv/
