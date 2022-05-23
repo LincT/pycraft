@@ -18,4 +18,4 @@ app/config.txt
 documentation
 
 # seperate helper files from main
-app/core/*
+app/core
